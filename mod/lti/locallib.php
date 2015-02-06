@@ -350,10 +350,18 @@ function lti_build_request($instance, $typeconfig, $course, $typeid = null, $isl
         // so we generate the same OAuth signature as the tool provider.
         $intro = str_replace("\n", "\r\n", $intro);
     }
+    
+    $url = '';
+    if ($usercontext = context_user::instance($USER->id, IGNORE_MISSING)) {
+        $url = $CFG->wwwroot.'/pluginfile.php/'.$usercontext->id.'/user/icon/clean/f1?rev=15';
+    }
+    
+    
     $requestparams = array(
         'resource_link_title' => $instance->name,
         'resource_link_description' => $intro,
         'user_id' => $USER->id,
+        'user_image' => $url,
         'lis_person_sourcedid' => $USER->idnumber,
         'roles' => $role,
         'context_id' => $course->id,
